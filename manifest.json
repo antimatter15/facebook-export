@@ -1,0 +1,17 @@
+{
+  "name": "Facebook Export",
+  "version": "0.1",
+  "manifest_version": 2,
+  "incognito": "split",
+  "app": {
+    "launch": {
+      "local_path": "main.html"
+    }
+  },
+  "permissions": [
+    "tabs",
+    "unlimitedStorage",
+    "notifications",
+    "https://*.facebook.com/"
+  ]
+}
