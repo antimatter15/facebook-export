@@ -2,13 +2,33 @@
 
 chrome.extension.onConnect.addListener(function(port) {
   return port.onMessage.addListener(function(msg) {
-    var response, selector;
+    var e, el, response, selector;
     response = (function() {
       var _i, _len, _results;
       _results = [];
       for (_i = 0, _len = msg.length; _i < _len; _i++) {
         selector = msg[_i];
-        _results.push(document.querySelector(selector).innerText);
+        if (selector === "@info") {
+          _results.push((function() {
+            var _j, _len1, _ref, _results1;
+            _ref = document.querySelectorAll('tr');
+            _results1 = [];
+            for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+              e = _ref[_j];
+              if (e.children.length === 2 && e.firstChild.tagName === 'TH') {
+                _results1.push([e.firstChild.innerText.trim(), e.lastChild.innerText.trim()]);
+              }
+            }
+            return _results1;
+          })());
+        } else {
+          el = document.querySelector(selector);
+          _results.push({
+            text: el.innerText,
+            href: el.href,
+            html: el.innerHTML
+          });
+        }
       }
       return _results;
     })();
